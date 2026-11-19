@@ -143,6 +143,11 @@ border:1px solid var(--line);border-radius:12px;padding:10px 12px;
 font-size:11.5px;font-weight:700;color:var(--berry);border:1px solid var(--berry);
 border-radius:999px;padding:1px 7px;margin-left:2px;vertical-align:2px;
 }
+.naifu-row.sold-out{opacity:.55}
+.naifu-row .soldout-tag{
+font-size:11.5px;font-weight:700;color:#fff;background:#b0a89c;
+border-radius:999px;padding:1px 7px;margin-left:2px;vertical-align:2px;
+}
 .naifu-row .stepper{margin-left:auto;display:flex;align-items:center;gap:4px}
 .stepper button{
 width:40px;height:40px;min-height:40px;border-radius:50%;border:1.5px solid var(--line);
@@ -466,13 +471,13 @@ var FRUITS = [
 {name:"红柚", color:"#f08a7a"}
 ];
 var NAIFU = [
-{name:"海盐奥利奥碎奶芙", tag:"咸口"},
+{name:"海盐奥利奥碎奶芙", tag:"咸口", soldOut:true},
 {name:"芋泥", tag:""},
-{name:"开心果奶芙", tag:""}
+{name:"开心果奶芙", tag:"", soldOut:true}
 ];
 
 var BOTTOM_FRUITS = ["芒果","阳光玫瑰","火龙果","玉菇","哈密瓜","红柚"];
-var ITEMS = FRUITS.concat(NAIFU.map(function(n){ return {name:n.name, tag:n.tag}; }));
+var ITEMS = FRUITS.concat(NAIFU.map(function(n){ return {name:n.name, tag:n.tag, soldOut:n.soldOut}; }));
 
 var state = {
 bottom: null, // bottom-layer fruit; only the 6 BOTTOM_FRUITS allowed
@@ -522,9 +527,9 @@ var pickList = $("pickList");
 var pickCntEls = [];
 ITEMS.forEach(function(it, i){
 var row = document.createElement("div");
-row.className = "naifu-row";
+row.className = "naifu-row" + (it.soldOut? " sold-out": "");
 var lead = it.color? '<span class="dot" style="background:'+it.color+'"></span>': '';
-var tag = it.tag? '<span class="tag">'+it.tag+'</span>': '';
+var tag = (it.tag? '<span class="tag">'+it.tag+'</span>': '') + (it.soldOut? '<span class="soldout-tag">售罄</span>': '');
 row.innerHTML =
 lead + '<span class="nm">'+ it.name + tag + '</span>' +
 '<span class="stepper">' +
@@ -540,7 +545,7 @@ minus.addEventListener("click", function(){
 if (state.picks[i] > 0){ state.picks[i]--; refreshPicks(); hideError($("buildError"));}
 });
 plus.addEventListener("click", function(){
-if (picksTotal() < 2){ state.picks[i]++; refreshPicks(); hideError($("buildError"));}
+if (!it.soldOut && picksTotal() < 2){ state.picks[i]++; refreshPicks(); hideError($("buildError"));}
 });
 pickList.appendChild(row);
 });
@@ -549,7 +554,7 @@ var total = picksTotal();
 pickCntEls.forEach(function(o, i){
 o.cnt.textContent = state.picks[i];
 o.minus.disabled = state.picks[i] <= 0;
-o.plus.disabled = total >= 2;
+o.plus.disabled = total >= 2 || !!ITEMS[i].soldOut;
 });
 $("pickBar").style.width = (total/2*100) + "%";
 var pt = $("pickProgressText");
