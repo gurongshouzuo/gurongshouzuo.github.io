@@ -148,6 +148,11 @@ border-radius:999px;padding:1px 7px;margin-left:2px;vertical-align:2px;
 font-size:11.5px;font-weight:700;color:#fff;background:#b0a89c;
 border-radius:999px;padding:1px 7px;margin-left:2px;vertical-align:2px;
 }
+.chip.sold-out{opacity:.55;cursor:not-allowed}
+.chip .soldout-tag{
+font-size:11.5px;font-weight:700;color:#fff;background:#b0a89c;
+border-radius:999px;padding:1px 7px;margin-left:2px;vertical-align:2px;
+}
 .naifu-row .stepper{margin-left:auto;display:flex;align-items:center;gap:4px}
 .stepper button{
 width:40px;height:40px;min-height:40px;border-radius:50%;border:1.5px solid var(--line);
@@ -329,7 +334,7 @@ footer{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:12.5px;
 </div>
 
 <div class="field">
-<span class="flabel">最底层水果 <span class="opt">— 必选 1 种，最底层只能放这 6 种水果</span></span>
+<span class="flabel">最底层水果 <span class="opt">— 必选 1 种，最底层只能放这 5 种水果</span></span>
 <div class="chip-grid" id="bottomGrid" role="group" aria-label="选择最底层水果"></div>
 </div>
 
@@ -465,9 +470,9 @@ var FRUITS = [
 {name:"芒果", color:"#f5a623"},
 {name:"哈密瓜", color:"#f0b26b"},
 {name:"玉菇", color:"#a9cf6e"},
-{name:"阳光玫瑰", color:"#8fce62"},
+{name:"阳光玫瑰", color:"#8fce62", soldOut:true},
 {name:"火龙果", color:"#d6336c"},
-{name:"蓝莓", color:"#46579e"},
+{name:"蓝莓", color:"#46579e", soldOut:true},
 {name:"红柚", color:"#f08a7a"}
 ];
 var NAIFU = [
@@ -511,8 +516,9 @@ BOTTOM_FRUITS.forEach(function(name){
 var f = null;
 FRUITS.forEach(function(x){ if (x.name === name) f = x;});
 var b = document.createElement("button");
-b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed","false");
-b.innerHTML = '<span class="dot" style="background:'+f.color+'"></span>' + name;
+b.type = "button"; b.className = "chip" + (f.soldOut? " sold-out": ""); b.setAttribute("aria-pressed","false");
+if (f.soldOut){ b.disabled = true; }
+b.innerHTML = '<span class="dot" style="background:'+f.color+'"></span>' + name + (f.soldOut? ' <span class="soldout-tag">售罄</span>': '');
 b.addEventListener("click", function(){
 state.bottom = name;
 bottomGrid.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed","false");});
@@ -585,7 +591,7 @@ $("qtyPlus").addEventListener("click", function(){ if(state.qty<20){ state.qty++
 /* ---------- Add to cart ---------- */
 $("addBtn").addEventListener("click", function(){
 if (!state.bottom){
-showError($("buildError"), "先选最底层的水果：最底层只能放芒果、阳光玫瑰、火龙果、玉菇、哈密瓜、红柚这 6 种。");
+showError($("buildError"), "先选最底层的水果：最底层只能放芒果、火龙果、玉菇、哈密瓜、红柚这 5 种。");
 $("builder").scrollIntoView({behavior:"smooth", block:"start"});
 return;
 }
