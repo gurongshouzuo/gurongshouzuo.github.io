@@ -412,10 +412,10 @@ footer{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:12.5px;
 <div class="field">
 <span class="flabel">付款方式 <span class="opt">— 两种都可以，订单发给店主后按这个付</span></span>
 <div class="pay-grid" id="payGrid" role="group" aria-label="选择付款方式">
-<button type="button" class="pay-card" data-pay="微信" aria-pressed="true"><span class="pdot" style="background:#3e7a3a"></span>微信</button>
-<button type="button" class="pay-card" data-pay="支付宝" aria-pressed="false"><span class="pdot" style="background:#2f7fd0"></span>支付宝</button>
+<button type="button" class="pay-card" data-pay="微信转账" aria-pressed="true"><span class="pdot" style="background:#3e7a3a"></span>微信转账</button>
+<button type="button" class="pay-card" data-pay="货到付款" aria-pressed="false"><span class="pdot" style="background:#2f7fd0"></span>货到付款</button>
 </div>
-<p class="pay-note">本页不在线收款：生成订单后复制发到店主微信，店主确认后用微信或支付宝付款即可。</p>
+<p class="pay-note">本页不在线收款：生成订单后复制发到店主微信，店主确认后按你选的方式付款即可。</p>
 </div>
 
 <div class="error" id="orderError" role="alert"></div>
@@ -481,7 +481,7 @@ qty: 1,
 cart: [], // {bottom, picks:[counts], qty}
 campus: "天平学院",
 slot: null,
-pay: "微信"
+pay: "微信转账"
 };
 
 function $(id){ return document.getElementById(id);}
