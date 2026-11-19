@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>订单管理 · A古手作</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+
+<!-- 登录 -->
+<div class="admin-card login-box" id="loginBox" style="display:none">
+<h1 style="font-size:24px">A古手作 · 订单管理</h1>
+<p class="muted">输入管理员邮箱和密码登录。账号只在店主手里，不要发给别人。</p>
+<div class="field">
+<label for="adminEmail">管理员邮箱</label>
+<input type="email" id="adminEmail" placeholder="输入邮箱" autocomplete="username" />
+</div>
+<div class="field">
+<label for="adminPw">管理员密码</label>
+<input type="password" id="adminPw" placeholder="输入密码" autocomplete="current-password" />
+</div>
+<div class="error" id="loginError" role="alert"></div>
+<div class="btnrow">
+<button type="button" class="btn" id="loginBtn">登录</button>
+</div>
+<p class="muted" style="margin-top:14px"><a href="index.html">← 回顾客点餐页</a></p>
+</div>
+
+<!-- 管理台 -->
+<div id="dash" style="display:none">
+<div class="title-block">
+<h1>A古手作 · <span class="accent">订单管理</span></h1>
+<p class="subtitle">顾客下单后订单直接出现在这里，不用再收微信复制的订单。</p>
+<div class="btnrow">
+<button type="button" class="btn secondary" id="exportBtn">导出订单 CSV</button>
+<button type="button" class="btn secondary" id="refreshBtn">刷新</button>
+<button type="button" class="btn danger" id="logoutBtn">退出登录</button>
+</div>
+</div>
+
+<div class="admin-card">
+<h2>今天</h2>
+<div class="stat-row">
+<div class="stat"><b id="statToday">0</b><span>今日订单</span></div>
+<div class="stat"><b id="statTotal">¥0</b><span>今日金额</span></div>
+<div class="stat"><b id="statWaiting">0</b><span>待确认</span></div>
+</div>
+</div>
+
+<div class="admin-card">
+<h2>订单</h2>
+<div class="filter-row" id="filterRow"></div>
+<div class="field" style="margin-top:12px">
+<input type="text" id="searchBox" placeholder="搜订单号 / 手机号 / 称呼" autocomplete="off" />
+</div>
+<div id="orderList"><p class="muted" style="margin-top:12px">加载中…</p></div>
+</div>
+
+<div class="admin-card menu-edit">
+<h2>菜单设置</h2>
+<p class="muted">改完点“保存菜单”，顾客页立刻生效，不用改代码、不用重新部署。</p>
+<div class="field">
+<label for="priceInput" style="display:block;font-size:14.5px;font-weight:700;margin-bottom:8px">每份价格（元）</label>
+<input type="text" id="priceInput" inputmode="numeric" style="max-width:140px" />
+</div>
+<div class="field">
+<label for="announceInput" style="display:block;font-size:14.5px;font-weight:700;margin-bottom:8px">公告 <span class="opt">（选填，显示在顾客页顶部；留空就不显示）</span></label>
+<textarea id="announceInput" placeholder="如：今天 17:00 那趟满了，只接 12:00 的单"></textarea>
+</div>
+<div class="field">
+<span class="flabel">配送时段 <span class="opt">— 关掉的时间顾客就选不到了</span></span>
+<label><input type="checkbox" id="slot1200" /> 中午 12:00</label>
+<label><input type="checkbox" id="slot1700" /> 下午 17:00</label>
+</div>
+<div class="field">
+<span class="flabel">水果 <span class="opt">— 取消勾选就是今天没有，顾客选不到</span></span>
+<div class="grid2" id="fruitChecks"></div>
+</div>
+<div class="field">
+<span class="flabel">奶芙 <span class="opt">— 取消勾选就是今天没有</span></span>
+<div class="grid2" id="creamChecks"></div>
+</div>
+<div class="error" id="menuError" role="alert"></div>
+<div class="btnrow">
+<button type="button" class="btn" id="saveMenuBtn">保存菜单</button>
+<span class="muted" id="menuSaved" style="align-self:center"></span>
+</div>
+</div>
+
+<p class="muted" style="margin-top:18px;text-align:center">订单数据存在 Supabase 数据库里；定期点“导出订单 CSV”备份一份更稳妥。</p>
+</div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="admin.js"></script>
+</body>
+</html>
