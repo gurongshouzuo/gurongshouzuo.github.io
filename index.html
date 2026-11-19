@@ -311,7 +311,7 @@ footer{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:12.5px;
 </div>
 <div class="delivery-note">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-deep)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm13 0a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/><path d="M8 18.5h7.5M5.5 16V9.5A1.5 1.5 0 0 1 7 8h4l3.5 8M11 8h3.2A1.8 1.8 0 0 1 16 9.8V16"/></svg>
-<div><b>免配送费</b>，送天平学院、江枫校区，<b>送到宿舍楼下</b>。每天两趟：<b>中午 12:00</b> 和 <b>下午 17:00</b>，下单时选好时间就行。</div>
+<div><b>免配送费</b>，送天平学院、江枫校区，<b>送到宿舍楼下</b>。每天三趟：<b>中午 12:00</b>、<b>下午 17:40</b> 和 <b>晚上 19:30</b>，下单时选好时间就行。</div>
 </div>
 </div>
 
@@ -378,7 +378,7 @@ footer{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:12.5px;
 </div>
 
 <div class="field">
-<span class="flabel">配送时间 <span class="opt">— 每天 12:00 / 17:00 两趟，送到宿舍楼下</span></span>
+<span class="flabel">配送时间 <span class="opt">— 每天 12:00 / 17:40 / 19:30 三趟，送到宿舍楼下</span></span>
 <div class="slot-grid" id="slotGrid" role="group" aria-label="选择配送时间"></div>
 </div>
 
@@ -435,7 +435,7 @@ footer{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:12.5px;
 
 <footer>
 A古榕手作 · 苏州科技大学天平学院门口手作千层摊<br />
-配送：天平学院 / 江枫校区 · 免配送费 · 每天 12:00 与 17:00 送到宿舍楼下
+配送：天平学院 / 江枫校区 · 免配送费 · 每天 12:00、17:40 与 19:30 送到宿舍楼下
 </footer>
 </div>
 
@@ -660,22 +660,22 @@ hideError($("orderError"));
 wireToggle("campusSeg", "data-campus", function(v){ state.campus = v;});
 wireToggle("payGrid", "data-pay", function(v){ state.pay = v;});
 
-/* ---------- Delivery slots: next 12:00 / 17:00 ---------- */
+/* ---------- Delivery slots: next 12:00 / 17:40 / 19:30 ---------- */
 var WEEK = ["周日","周一","周二","周三","周四","周五","周六"];
 function buildSlots(){
 var now = new Date();
 var slots = [];
 for (var d = 0; d < 3 && slots.length < 3; d++){
-[12,17].forEach(function(h){
+[{h:12,m:0,t:"中午 12:00"},{h:17,m:40,t:"下午 17:40"},{h:19,m:30,t:"晚上 19:30"}].forEach(function(o){
 if (slots.length >= 3) return;
-var dt = new Date(now.getFullYear(), now.getMonth(), now.getDate()+d, h, 0, 0);
+var dt = new Date(now.getFullYear(), now.getMonth(), now.getDate()+d, o.h, o.m, 0);
 if (dt > now){
 var dayLabel = d===0? "今天": (d===1? "明天": "后天");
 slots.push({
 date: dt,
 dayLabel: dayLabel,
 dateText: (dt.getMonth()+1) + "月" + dt.getDate() + "日 " + WEEK[dt.getDay()],
-time: (h===12? "中午 12:00": "下午 17:00")
+time: o.t
 });
 }
 });
