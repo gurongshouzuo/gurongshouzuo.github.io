@@ -680,6 +680,7 @@ for (var d = 0; d < 3 && slots.length < 3; d++){
 [{h:12,m:0,t:"中午 12:00"},{h:17,m:40,t:"下午 17:40"},{h:19,m:30,t:"晚上 19:30"}].forEach(function(o){
 if (slots.length >= 3) return;
 var dt = new Date(now.getFullYear(), now.getMonth(), now.getDate()+d, o.h, o.m, 0);
+if (dt.getFullYear()===2026 && dt.getMonth()===10 && dt.getDate()===21 && o.h===12) return; // 11月21日中午 12:00 暂停一趟，22日起自动恢复
 if (dt > now){
 var dayLabel = d===0? "今天": (d===1? "明天": "后天");
 slots.push({
@@ -708,6 +709,15 @@ state.slot = s;
 slotGrid.appendChild(b);
 });
 state.slot = slots[0];
+
+/* 11月21日中午暂停提示：11月22日 0 点后自动消失 */
+if (new Date() < new Date(2026, 10, 22)){
+var n = document.createElement("div");
+n.className = "step-desc";
+n.style.marginTop = "6px";
+n.textContent = "11月21日（周六）中午 12:00 暂停一趟，当天只有 17:40、19:30；11月22日起恢复三趟。";
+slotGrid.parentNode.insertBefore(n, slotGrid.nextSibling);
+}
 
 /* ---------- Generate order ---------- */
 function buildOrderText(info){
