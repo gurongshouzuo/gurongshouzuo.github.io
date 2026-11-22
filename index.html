@@ -334,7 +334,7 @@ footer{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:12.5px;
 </div>
 
 <div class="field">
-<span class="flabel">最底层水果 <span class="opt">— 必选 1 种，最底层只能放这 5 种水果</span></span>
+<span class="flabel">最底层水果 <span class="opt">— 必选 1 种，最底层只能放这 4 种水果</span></span>
 <div class="chip-grid" id="bottomGrid" role="group" aria-label="选择最底层水果"></div>
 </div>
 
@@ -467,7 +467,7 @@ A古榕手作 · 苏州科技大学天平学院门口手作千层摊<br />
 "use strict";
 var PRICE = 25;
 var FRUITS = [
-{name:"芒果", color:"#f5a623"},
+{name:"芒果", color:"#f5a623", soldOut:true},
 {name:"哈密瓜", color:"#f0b26b"},
 {name:"玉菇", color:"#a9cf6e"},
 {name:"阳光玫瑰", color:"#8fce62"},
@@ -591,7 +591,7 @@ $("qtyPlus").addEventListener("click", function(){ if(state.qty<20){ state.qty++
 /* ---------- Add to cart ---------- */
 $("addBtn").addEventListener("click", function(){
 if (!state.bottom){
-showError($("buildError"), "先选最底层的水果：最底层只能放芒果、阳光玫瑰、火龙果、玉菇、哈密瓜这 5 种。");
+showError($("buildError"), "先选最底层的水果：最底层只能放阳光玫瑰、火龙果、玉菇、哈密瓜这 4 种。");
 $("builder").scrollIntoView({behavior:"smooth", block:"start"});
 return;
 }
