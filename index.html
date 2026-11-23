@@ -334,7 +334,7 @@ footer{margin-top:22px;text-align:center;color:var(--ink-soft);font-size:12.5px;
 </div>
 
 <div class="field">
-<span class="flabel">最底层水果 <span class="opt">— 必选 1 种，最底层只能放这 4 种水果</span></span>
+<span class="flabel">最底层水果 <span class="opt">— 必选 1 种，最底层只能放这 5 种水果</span></span>
 <div class="chip-grid" id="bottomGrid" role="group" aria-label="选择最底层水果"></div>
 </div>
 
@@ -473,7 +473,7 @@ var FRUITS = [
 {name:"阳光玫瑰", color:"#8fce62"},
 {name:"火龙果", color:"#d6336c"},
 {name:"蓝莓", color:"#46579e"},
-{name:"红柚", color:"#f08a7a", soldOut:true}
+{name:"红柚", color:"#f08a7a"}
 ];
 var NAIFU = [
 {name:"海盐奥利奥碎奶芙", tag:"咸口", soldOut:false},
@@ -591,7 +591,7 @@ $("qtyPlus").addEventListener("click", function(){ if(state.qty<20){ state.qty++
 /* ---------- Add to cart ---------- */
 $("addBtn").addEventListener("click", function(){
 if (!state.bottom){
-showError($("buildError"), "先选最底层的水果：最底层只能放阳光玫瑰、火龙果、玉菇、哈密瓜这 4 种。");
+showError($("buildError"), "先选最底层的水果：最底层只能放阳光玫瑰、火龙果、玉菇、哈密瓜、红柚这 5 种。");
 $("builder").scrollIntoView({behavior:"smooth", block:"start"});
 return;
 }
